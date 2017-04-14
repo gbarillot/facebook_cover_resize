@@ -55,7 +55,7 @@ If you don't want to use Rails, you can however just use the plain Algorithm:
 ```ruby
 FacebookCoverResize.compute(
   original: [original_width, original_height],
-  offsets: [offst_x, offset_y],
+  offsets: [offset_x, offset_y],
   width: width_you_want_for_final_display_in_pixels
 )
 ```
