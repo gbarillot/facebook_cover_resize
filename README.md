@@ -38,6 +38,10 @@ is as simple as :
 
 ```ruby
 - @event = Event.find(123)
+# @event.cover: String (raw URL)
+# @event.original: Array, containing 2 values
+# @event.offsets: Array, containing 2 values
+
 = event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
 ```
 
