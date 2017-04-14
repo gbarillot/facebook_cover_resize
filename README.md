@@ -45,9 +45,11 @@ which is 1.91 (500/262). That's why you can only set the new width for your thum
 height is then automatically computed.
 
 Example: Let's say you need to display your thumbnails in a 250px wide container. You only have to
-call the Gem using this width, and height will be automatically set to 250 / 1.91 = 131px
+call the Gem using this width, height being automatically set to 250 / 1.91 = 131px
 
-If you don't want to use Rails, you can however just use the plain Algorithm, like this :
+### Life outside of Rails
+
+If you don't want to use Rails, you can however just use the plain Algorithm:
 
 ```ruby
 FacebookCoverResize.compute(
