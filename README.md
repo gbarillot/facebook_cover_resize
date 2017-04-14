@@ -3,17 +3,16 @@
 [![Build Status](https://travis-ci.org/gbarillot/facebook_cover_resize.png)](https://travis-ci.org/gbarillot/facebook_cover_resize)
 
 This Gem allows to display and resize Facebook events' cover image according to offset_x / offset_y
-given by Facebook. Using this Gem, you can display event cover image exactly like they are on Facebook,
-no more distortions, no more poor cropping.
+provided by the Facebook Graph API. Using this Gem, you can display event cover image exactly like how they look like on Facebook, no distortions, no more poor cropping.
 
-To use this Gem, you have to grab 3 parameters from Facebook:
+To use this Gem, you have to grab 3 parameters from Facebook's API:
 
 * offset_x (positive integer)
 * offset_y (positive integer)
 * cover source (the URL of the image)
 
 WARNING: aside from these data provided by Facebook, you'll also need the dimensions of the image itself!
-I use the [Fastimage](https://github.com/sdsykes/fastimage) Gem for this
+Personally I use the [Fastimage](https://github.com/sdsykes/fastimage) Gem for this
 and it's working perfectly fine.
 
 ## Installation
@@ -42,11 +41,11 @@ is as simple as :
 = event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
 ```
 
-Note: Although this Gem handles resizing, you MUST consider the original Facebook width/height ratio,
+*Note:* Although this Gem handles resizing, you MUST respect the original Facebook width/height ratio,
 which is 1.91 (500/262). That's why you can only set the new width for your thumbnails,
 height is then automatically computed.
 
-Example: Let's say you need to display your thumbnails in a 250px wide container. You only have to
+*Example:* Let's say you need to display your thumbnails in a 250px wide container. You only have to
 call the Gem using this width, height being automatically set to 250 / 1.91 = 131px
 
 ### Life outside of Rails
