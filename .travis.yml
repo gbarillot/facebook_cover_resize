@@ -1,5 +1,11 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.3.0
+  - jruby-19mode
+  - 2.0.0
+  - 2.2
+  - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
 before_install: gem install bundler -v 1.13.7
