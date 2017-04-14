@@ -1,8 +1,15 @@
-# FacebookCoverResize
+# Facebook Cover Resize
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/facebook_cover_resize`. To experiment with that code, run `bin/console` for an interactive prompt.
+This Gem allows to display and resize Facebook events' cover image according to offset_x / offset_y
+given by Facebook. Using this Gem, you can display event cover image exactly like they are on Facebook,
+no more distortions, no more poor cropping.
 
-TODO: Delete this and the text above, and describe your gem
+Note: Although this Gem handles resizing, you MUST consider the original Facebook width/height ratio,
+which is 1.91 (500/262). That's why you can only set the new width for your thumbnails,
+height is then automatically computed.
+
+Example: Let's say you need to display your thumbnails in a 250px wide container. You only have to
+call the Gem using this width, and height will be automatically set to 250 / 1.91 = 131px
 
 ## Installation
 
@@ -22,20 +29,60 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This Gem contains an algorithm for image size computations, and a Rails view helper. Using the view helper
+is as simple as :
 
-## Development
+    - @event = Event.find(123)
+    = event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+If you don't want to use Rails, you can however just use the plain Algorithm, like this :
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+  FacebookCoverResize.compute(
+    original: [original_width, original_height],
+    offsets: [offst_x, offset_y],
+    width: width_you_want_for_final_display_in_pixels
+  )
+```
+This outputs an array containing 4 values :
+
+```ruby
+[
+  offset_y,
+  offset_x,
+  image_width,
+  image_height
+]
+```
+You can then build a container, surrounding an img tag, using these values like this :
+
+```html
+<div
+  style="
+    width: 500px !important;       # Container width
+    height: 262px !important;      # Container width / 1.91
+    overflow: hidden !important;   
+    position: relative !important;
+    padding:0 !important
+  ">
+  <img
+    style="
+      position: absolute !important;
+      top: 0px !important;        # offset_y
+      left: 0px !important;       # offset_x
+      width: 500px !important;    # image_width
+      height:824px !important;    # image_height
+      margin: 0 !important"
+    src="FACEBOOK_URL/event_cover.jpg" # The cover source URL
+  />
+</div>
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/facebook_cover_resize.
+Bug reports and pull requests are welcome on GitHub at https://github.com/gbarillot/facebook_cover_resize.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
