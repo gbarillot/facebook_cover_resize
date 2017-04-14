@@ -4,12 +4,15 @@ This Gem allows to display and resize Facebook events' cover image according to 
 given by Facebook. Using this Gem, you can display event cover image exactly like they are on Facebook,
 no more distortions, no more poor cropping.
 
-Note: Although this Gem handles resizing, you MUST consider the original Facebook width/height ratio,
-which is 1.91 (500/262). That's why you can only set the new width for your thumbnails,
-height is then automatically computed.
+To use this Gem, you have to grab 3 parameters from Facebook:
 
-Example: Let's say you need to display your thumbnails in a 250px wide container. You only have to
-call the Gem using this width, and height will be automatically set to 250 / 1.91 = 131px
+* offset_x (positive integer)
+* offset_y (positive integer)
+* cover source (the URL of the image)
+
+WARNING: aside from these data provided by Facebook, you'll also need the dimensions of the image itself!
+I use the [Fastimage](https://github.com/sdsykes/fastimage) Gem for this
+and it's working perfectly fine.
 
 ## Installation
 
@@ -32,17 +35,26 @@ Or install it yourself as:
 This Gem contains an algorithm for image size computations, and a Rails view helper. Using the view helper
 is as simple as :
 
-    - @event = Event.find(123)
-    = event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
+```ruby
+- @event = Event.find(123)
+= event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
+```
+
+Note: Although this Gem handles resizing, you MUST consider the original Facebook width/height ratio,
+which is 1.91 (500/262). That's why you can only set the new width for your thumbnails,
+height is then automatically computed.
+
+Example: Let's say you need to display your thumbnails in a 250px wide container. You only have to
+call the Gem using this width, and height will be automatically set to 250 / 1.91 = 131px
 
 If you don't want to use Rails, you can however just use the plain Algorithm, like this :
 
 ```ruby
-  FacebookCoverResize.compute(
-    original: [original_width, original_height],
-    offsets: [offst_x, offset_y],
-    width: width_you_want_for_final_display_in_pixels
-  )
+FacebookCoverResize.compute(
+  original: [original_width, original_height],
+  offsets: [offst_x, offset_y],
+  width: width_you_want_for_final_display_in_pixels
+)
 ```
 This outputs an array containing 4 values :
 
