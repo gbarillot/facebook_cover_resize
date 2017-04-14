@@ -48,7 +48,7 @@ height is then automatically computed.
 *Example:* Let's say you need to display your thumbnails in a 250px wide container. You only have to
 call the Gem using this width, height being automatically set to 250 / 1.91 = 131px
 
-### Life outside of Rails
+### Life outside of the Rails
 
 If you don't want to use Rails, you can however just use the plain Algorithm:
 
