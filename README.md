@@ -1,5 +1,7 @@
 # Facebook Cover Resize
 
+[![Build Status](https://travis-ci.org/gbarillot/facebook_cover_resize.png)](https://travis-ci.org/gbarillot/facebook_cover_resize)
+
 This Gem allows to display and resize Facebook events' cover image according to offset_x / offset_y
 given by Facebook. Using this Gem, you can display event cover image exactly like they are on Facebook,
 no more distortions, no more poor cropping.
