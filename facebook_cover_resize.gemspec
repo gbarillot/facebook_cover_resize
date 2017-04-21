@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["guillaume barillot"]
   spec.email         = ["gbarillot@gmail.com"]
 
-  spec.summary       = "Compute width/size and offsets x/y for Facebook events cover image"
-  spec.description   = "Compute width/size and offsets x/y for Facebook events cover image"
+  spec.summary       = "Compute width/size and offsets x/y for Facebook cover images"
+  spec.description   = "Compute width/size and offsets x/y for Facebook cover images"
   spec.homepage      = "https://github.com/gbarillot/facebook_cover_resize"
   spec.license       = "MIT"
 

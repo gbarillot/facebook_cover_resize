@@ -4,7 +4,7 @@ require 'facebook_cover_resize/railtie' if defined?(Rails)
 module FacebookCoverResize
   def self.compute(args)
     ow = args[:width].to_f
-    oh = (ow / 1.91)
+    oh = (ow / args[:ratio])
 
     if args[:original].any? && args[:offsets].any?
       nw = args[:original].first.to_f
@@ -59,7 +59,7 @@ module FacebookCoverResize
       offset_y = 0
     end
 
-    # [top, left, width, height]
+    # [margin-top, margin-left, image width, image height]
     out = [
       offset_y.ceil,
       offset_x.ceil,

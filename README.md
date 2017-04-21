@@ -2,22 +2,21 @@
 
 [![Build Status](https://travis-ci.org/gbarillot/facebook_cover_resize.png)](https://travis-ci.org/gbarillot/facebook_cover_resize)
 
-This Gem allows to display and resize Facebook events' cover image according to offset_x / offset_y
-provided by the Facebook Graph API. Using this Gem, you can display event cover image exactly like how they look like on Facebook, no distortions, no more poor cropping.
+This Ruby Gem let you display and resize both Facebook events and accounts cover images according to offset_x / offset_y provided by Facebook Graph API. Using this Gem, you can display cover images exactly as they are on Facebook.
 
-To use this Gem, you have to grab 3 parameters from Facebook's API:
+To use this Gem, you have to grab 3 parameters from Facebook API:
 
 * offset_x (positive integer)
 * offset_y (positive integer)
 * cover source (the URL of the image)
 
-WARNING: aside from these data provided by Facebook, you'll also need the dimensions of the image itself!
+Aside from these data provided by Facebook, you'll also need the dimensions of the image itself.
 Personally I use the [Fastimage](https://github.com/sdsykes/fastimage) Gem for this
 and it's working perfectly fine.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile:
 
 ```ruby
 gem 'facebook_cover_resize'
@@ -33,34 +32,39 @@ Or install it yourself as:
 
 ## Usage
 
-This Gem contains an algorithm for image size computations, and a Rails view helper. Using the view helper
-is as simple as :
+This Gem contains an algorithm for image size computations, and some Rails view helpers. Using the view helpers
+to display and resize an event cover is as simple as:
 
 ```ruby
 - @event = Event.find(123)
 # @event.cover: String (raw URL)
-# @event.original: Array, containing 2 values
-# @event.offsets: Array, containing 2 values
+# @event.original: Array, containing 2 positive integers
+# @event.offsets: Array, containing 2 integers
 
 = event_cover_tag source: @event.cover, original: @event.cover_size, offsets: @event.offsets, width: 500
 ```
 
-*Note:* Although this Gem handles resizing, you MUST respect the original Facebook width/height ratio,
-which is 1.91 (500/262). That's why you can only set the new width for your thumbnails,
-height is then automatically computed.
+If you want to display an account cover:
 
-*Example:* Let's say you need to display your thumbnails in a 250px wide container. You only have to
-call the Gem using this width, height being automatically set to 250 / 1.91 = 131px
+```ruby
+- @account = Account.find(123)
+
+= account_cover_tag source: @account.cover, original: @account.cover_size, offsets: @account.offsets, width: 500
+```
+
+*Note:* This Gem handles resizing, but you MUST respect the original Facebook width/height ratios,
+which is 1.91 (500/262) for events, and 2.66 (829/312) for an account cover. That's why you only have to set the new width for your thumbnails, height being automatically computed.
 
 ### Life outside of the Rails
 
-If you don't want to use Rails, you can however just use the plain Algorithm:
+If you don't want to use Rails, you can however simply use the plain Algorithm:
 
 ```ruby
 FacebookCoverResize.compute(
   original: [original_width, original_height],
   offsets: [offset_x, offset_y],
   width: width_you_want_for_final_display_in_pixels
+  ratio: 1.91
 )
 ```
 This outputs an array containing 4 values :
