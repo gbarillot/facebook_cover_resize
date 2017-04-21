@@ -10,7 +10,7 @@ To use this Gem, you have to grab 3 parameters from Facebook API:
 * offset_y (positive integer)
 * cover source (the URL of the image)
 
-Aside from these data provided by Facebook, you'll also need the dimensions of the image itself.
+Aside from these data provided by Facebook, you'll also need the size of the original image.
 Personally I use the [Fastimage](https://github.com/sdsykes/fastimage) Gem for this
 and it's working perfectly fine.
 
@@ -52,8 +52,8 @@ If you want to display an account cover:
 = account_cover_tag source: @account.cover, original: @account.cover_size, offsets: @account.offsets, width: 500
 ```
 
-*Note:* This Gem handles resizing, but you MUST respect the original Facebook width/height ratios,
-which is 1.91 (500/262) for events, and 2.66 (829/312) for an account cover. That's why you only have to set the new width for your thumbnails, height being automatically computed.
+**Note:** although this Gem handles resizing, you MUST respect the original Facebook width/height ratios,
+which is 1.91 (500px/262px) for events, and 2.66 (829px/312px) for an account cover. That's why you only have to set the new width for your thumbnails, height being automatically computed.
 
 ### Life outside of the Rails
 
@@ -63,7 +63,7 @@ If you don't want to use Rails, you can however simply use the plain Algorithm:
 FacebookCoverResize.compute(
   original: [original_width, original_height],
   offsets: [offset_x, offset_y],
-  width: width_you_want_for_final_display_in_pixels
+  width: width_you_want_for_final_display_in_pixels,
   ratio: 1.91
 )
 ```
